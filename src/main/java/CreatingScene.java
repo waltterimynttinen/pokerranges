@@ -50,6 +50,7 @@ public class CreatingScene {
         hb2.setAlignment(Pos.CENTER);
         bp.setPadding(new Insets(20,20,20,20));
         scene = new Scene(bp, 1600, 900);
+        createTemplateList();
         onReadyButtonAction(b1);
         onImportButtonAction(b2);
         onCategoryButtonAction(b3);
@@ -58,17 +59,17 @@ public class CreatingScene {
     public void onReadyButtonAction(Button b){
         b.setOnAction(e->{
             if(tf2.getText().isEmpty() || Integer.parseInt(tf4.getText()) == 0){
-                ArrayList<String> rlist = new ArrayList<String>();
+                ArrayList<String> rlist = new ArrayList<>();
                 for(TextField t : tflist){
                     if(!t.getText().isEmpty()){
                         rlist.add(t.getText());
                     }
                 }
                 alist.add(rlist);
-                RangeTree rt = new RangeTree(tf1.getText(), 1, alist, categories);
+                RangeTree rt = new RangeTree(tf1.getText(),alist);
             }
             else{
-                BranchScene bs = new BranchScene();
+                BranchScene bs = new BranchScene(Integer.parseInt(tf4.getText()), tf1.getText(), categories);
                 Main.stage.setScene(bs.getBranchScene());
                 Main.stage.show();
             }
@@ -86,18 +87,24 @@ public class CreatingScene {
         b.setOnAction(e->{
             if((Integer.parseInt(tf4.getText())) == 0){
                 Label cname = new Label(tf2.getText());
-                categories.add(tf2.getText());
+                categories.add(1,tf2.getText());
                 vb1.getChildren().clear();
                 vb1.getChildren().add(cname);
             }
             else if((Integer.parseInt(tf4.getText())) > 1){
                 Label next = new Label("Press ready to create your ranges");
-                categories.add(tf2.getText());
+                categories.add(1,tf2.getText());
                 vb1.getChildren().clear();
                 vb1.getChildren().add(next);
 
             }
         });
+    }
+
+    public void createTemplateList(){
+        for(int i = 0; i<20; i++){
+            categories.add(new String());
+        }
     }
 
     public Scene getCreatingScene(){
@@ -111,5 +118,4 @@ public class CreatingScene {
             vb.getChildren().add(temp);
         }
     }
-
 }
