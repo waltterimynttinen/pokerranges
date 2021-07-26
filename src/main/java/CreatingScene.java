@@ -87,13 +87,13 @@ public class CreatingScene {
         b.setOnAction(e->{
             if((Integer.parseInt(tf4.getText())) == 0){
                 Label cname = new Label(tf2.getText());
-                categories.add(1,tf2.getText());
+                categories.add(0,tf2.getText());
                 vb1.getChildren().clear();
                 vb1.getChildren().add(cname);
             }
             else if((Integer.parseInt(tf4.getText())) > 1){
                 Label next = new Label("Press ready to create your ranges");
-                categories.add(1,tf2.getText());
+                categories.add(0,tf2.getText());
                 vb1.getChildren().clear();
                 vb1.getChildren().add(next);
 

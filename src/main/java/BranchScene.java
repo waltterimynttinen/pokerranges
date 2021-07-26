@@ -94,13 +94,17 @@ public class BranchScene {
                     categories.add(s);
                 }
             }
-            ArrayList<String> rlist = new ArrayList<>();
-            for(TextField t : tflist1){
-                if(!t.getText().isEmpty()){
-                    rlist.add(t.getText());
+            for(ArrayList<TextField> list : alist1){
+                ArrayList<String> rlist = new ArrayList<>();
+                for(TextField textField : list){
+                    if(!textField.getText().isEmpty()) {
+                        rlist.add(textField.getText());
+                    }
                 }
+                alist2.add(rlist);
             }
             RangeTree rt = new RangeTree(name, categories, alist2);
+            System.out.println(rt.toString());
         });
     }
 }
