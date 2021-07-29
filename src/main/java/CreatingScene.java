@@ -8,6 +8,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -65,8 +67,14 @@ public class CreatingScene {
                         rlist.add(t.getText());
                     }
                 }
-                alist.add(rlist);
-                RangeTree rt = new RangeTree(tf1.getText(),alist);
+                RangeTree rt = new RangeTree(tf1.getText(),rlist);
+                System.out.println(rt.getName() + ",\n" + rt.getCblist());
+                try {
+                    FileHandler.createFile(rt);
+                    FileHandler.writeToFileBasic(rt);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             else{
                 BranchScene bs = new BranchScene(Integer.parseInt(tf4.getText()), tf1.getText(), categories);

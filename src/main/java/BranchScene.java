@@ -7,6 +7,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Flow;
 
@@ -103,8 +106,17 @@ public class BranchScene {
                 }
                 alist2.add(rlist);
             }
-            RangeTree rt = new RangeTree(name, categories, alist2);
+            RangeTree rt = new RangeTree(name,categories,alist2);
+            try {
+                FileHandler.createFile(rt);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            FileHandler.writeToFileAdvanced(rt);
             System.out.println(rt.toString());
+            StartingScene sc = new StartingScene();
+            Main.stage.setScene(sc.getStartingScene());
+            Main.stage.show();
         });
     }
 }
