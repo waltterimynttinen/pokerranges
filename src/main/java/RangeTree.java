@@ -5,15 +5,13 @@ import java.util.ArrayList;
 public class RangeTree {
     private String name;
     private ArrayList<String> rlist = new ArrayList<>();
-    private ArrayList<String> cblist = new ArrayList<>();
     private ArrayList<ArrayList> alist = new ArrayList<>();
     private ArrayList<ArrayList> categoryList = new ArrayList<>();
 
-    public RangeTree(String name, ArrayList<String> cblist, ArrayList<ArrayList> alist){
+    public RangeTree(String name, ArrayList<ArrayList> categoryList, ArrayList<ArrayList> alist){
         this.name = name;
-        this.cblist = deleteStringArrays(cblist);
         this.alist = deleteArrays(alist);
-        categoryList.add(cblist);
+        this.categoryList = categoryList;
     }
 
     public RangeTree(String name, ArrayList<String> rlist){
@@ -22,7 +20,7 @@ public class RangeTree {
     }
 
     public String toString(){
-        return this.name+" "+this.cblist+" "+this.alist;
+        return this.name+" "+this.categoryList+" "+this.alist;
     }
 
     public ArrayList<ArrayList> deleteArrays(ArrayList<ArrayList> al){
@@ -30,16 +28,13 @@ public class RangeTree {
         temp.removeIf(item -> item == null || item.isEmpty());
         return temp;
     }
-    public ArrayList<String> deleteStringArrays(ArrayList<String> al){
+    public static ArrayList<String> deleteStringArrays(ArrayList<String> al){
         ArrayList<String> temp = al;
         temp.removeIf(item -> item == null || "".equals(item));
         return temp;
     }
     public String getName(){
         return name;
-    }
-    public ArrayList<String> getCblist(){
-        return cblist;
     }
     public ArrayList<ArrayList> getAlist(){
         return  alist;

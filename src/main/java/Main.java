@@ -2,6 +2,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Main extends Application {
     public static Stage stage;
 
@@ -12,6 +15,13 @@ public class Main extends Application {
     }
 
     public void start(Stage stage) throws Exception {
+        try {
+            File f = new File("treeNames");
+            f.createNewFile();
+        }catch(IOException e){
+            System.out.println("An error occurred");
+            e.printStackTrace();
+        }
         setStage(stage);
         StartingScene sc = new StartingScene();
         stage.setTitle("Poker Ranges");

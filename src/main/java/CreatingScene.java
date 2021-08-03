@@ -32,8 +32,9 @@ public class CreatingScene {
     private Button b2 = new Button("Import ranges");
     private Button b3 = new Button("Create category");
     private ArrayList<TextField> tflist = new ArrayList<>();
-    private ArrayList<ArrayList> alist = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
+    private ArrayList<ArrayList> alist = new ArrayList<>();
+    private ArrayList<ArrayList> categoryList = new ArrayList<>();
 
 
     public CreatingScene(){
@@ -67,20 +68,32 @@ public class CreatingScene {
                         rlist.add(t.getText());
                     }
                 }
-                RangeTree rt = new RangeTree(tf1.getText(),rlist);
-                System.out.println(rt.getName() + ",\n" + rt.getCblist());
-                try {
-                    FileHandler.createFile(rt);
-                    FileHandler.writeToFileBasic(rt);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                if(categoryList.isEmpty()) {
+                    RangeTree rt = new RangeTree(tf1.getText(), rlist);
+                    try {
+                        FileHandler.createFile(rt);
+                        FileHandler.writeToFileBasic(rt);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }else{
+                    alist.add(rlist);
+                    RangeTree rt = new RangeTree(tf1.getText(),categoryList,alist);
+                    try {
+                        FileHandler.createFile(rt);
+                        FileHandler.writeToFileAdvanced(rt);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
+                StartingScene sc = new StartingScene();
+                Main.stage.setScene(sc.getStartingScene());
             }
             else{
-                BranchScene bs = new BranchScene(Integer.parseInt(tf4.getText()), tf1.getText(), categories);
+                BranchScene bs = new BranchScene(Integer.parseInt(tf4.getText()), tf1.getText(), categoryList);
                 Main.stage.setScene(bs.getBranchScene());
-                Main.stage.show();
             }
+            Main.stage.show();
         });
     }
     public void onImportButtonAction(Button b){
@@ -96,12 +109,16 @@ public class CreatingScene {
             if((Integer.parseInt(tf4.getText())) == 0){
                 Label cname = new Label(tf2.getText());
                 categories.add(0,tf2.getText());
+                RangeTree.deleteStringArrays(categories);
+                categoryList.add(categories);
                 vb1.getChildren().clear();
                 vb1.getChildren().add(cname);
             }
             else if((Integer.parseInt(tf4.getText())) > 1){
                 Label next = new Label("Press ready to create your ranges");
                 categories.add(0,tf2.getText());
+                RangeTree.deleteStringArrays(categories);
+                categoryList.add(categories);
                 vb1.getChildren().clear();
                 vb1.getChildren().add(next);
 

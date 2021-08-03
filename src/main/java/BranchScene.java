@@ -25,16 +25,17 @@ public class BranchScene {
     private ArrayList<TextField> tflist2 = new ArrayList<>();
     private ArrayList<String> brlist = new ArrayList<>();
     private ArrayList<String> categories = new ArrayList<>();
+    private ArrayList<ArrayList> categoryList = new ArrayList<>();
     private ArrayList<ArrayList> alist1 = new ArrayList<>();
     private ArrayList<ArrayList> alist2 = new ArrayList<>();
     private String cssLayout = "-fx-border-color: black;\n" +
             "-fx-border-insets: 10;\n" +
             "-fx-border-width: 3;\n";
 
-    public BranchScene(int branches, String name, ArrayList<String> categories){
+    public BranchScene(int branches, String name, ArrayList<ArrayList> categoryList){
         this.branches = branches;
         this.name = name;
-        this.categories = categories;
+        this.categoryList = categoryList;
         createBranches(branches);
         fp.getChildren().add(readyButton);
         scene = new Scene(fp,1600,900);
@@ -94,9 +95,10 @@ public class BranchScene {
         b.setOnAction(e->{
             for(String s: brlist){
                 if(!s.isEmpty()){
-                    categories.add(s);
+                    categoryList.get(0).add(s);
                 }
             }
+            RangeTree.deleteStringArrays(categories);
             for(ArrayList<TextField> list : alist1){
                 ArrayList<String> rlist = new ArrayList<>();
                 for(TextField textField : list){
@@ -106,7 +108,7 @@ public class BranchScene {
                 }
                 alist2.add(rlist);
             }
-            RangeTree rt = new RangeTree(name,categories,alist2);
+            RangeTree rt = new RangeTree(name,categoryList,alist2);
             try {
                 FileHandler.createFile(rt);
             } catch (IOException ioException) {
