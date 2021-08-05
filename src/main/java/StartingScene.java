@@ -66,19 +66,19 @@ public class StartingScene {
             buttonList.add(b);
             fp.getChildren().add(b);
             b.setOnAction(e->{
+                ViewingScene vs = new ViewingScene(rangeTreeList.get(buttonList.indexOf(b)));
+                Main.stage.setScene(vs.getViewingScene());
+                Main.stage.show();
             });
         }
     }
 
-    /**
-     * toinen iteraatio ei toimi oikein, korjatkaa ensi kerralla =)!
-     *
-     */
     private void createRangeTrees(ArrayList<String> nameList){
-        int temp = 0;
         for(int i=0; i<nameList.size();i++){
-            categoryList.clear();
-            rangeList.clear();
+            int temp = 0;
+            ArrayList<ArrayList> cbtemp = new ArrayList<>();
+            ArrayList<ArrayList> rtemp = new ArrayList<>();
+            rtlist.clear();
             File f = new File(nameList.get(i));
             try {
                 Scanner reader = new Scanner(f);
@@ -91,12 +91,12 @@ public class StartingScene {
                         break;
                     }else{
                         temp++;
-                        ArrayList<String> temp1 = new ArrayList<>();
+                        ArrayList<String> temp3 = new ArrayList<>();
                         String[] temp2 = rtlist.get(j).split(",");
                         for(int k = 0; k<temp2.length;k++){
-                            cblist.add(temp2[k]);
+                            temp3.add(temp2[k]);
                         }
-                        categoryList.add(temp1);
+                        cbtemp.add(temp3);
                     }
                 }
                 for(int j=temp+1;j<rtlist.size();j++){
@@ -105,16 +105,19 @@ public class StartingScene {
                     for(int k = 0; k<temp2.length;k++){
                         temp1.add(temp2[k]);
                     }
-                    rangeList.add(temp1);
+                    rtemp.add(temp1);
                     rlist = temp1;
                 }
-                rtname = rtlist.get(0);
-                if(categoryList.isEmpty()){
+                rtname = rtlist.get(0).substring(0,rtlist.get(0).length()-1);
+                if(cbtemp.isEmpty()){
                     RangeTree rt = new RangeTree(rtname, rlist);
+                    System.out.println(rt.toStringSimple());
+                    rangeTreeList.add(rt);
                 }
                 else{
-                    RangeTree rt = new RangeTree(rtname, categoryList, rangeList);
+                    RangeTree rt = new RangeTree(rtname, cbtemp, rtemp);
                     System.out.println(rt.toString());
+                    rangeTreeList.add(rt);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

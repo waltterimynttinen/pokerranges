@@ -7,20 +7,28 @@ public class RangeTree {
     private ArrayList<String> rlist = new ArrayList<>();
     private ArrayList<ArrayList> alist = new ArrayList<>();
     private ArrayList<ArrayList> categoryList = new ArrayList<>();
+    private int categoryAmount = 1;
+    private int type;
 
     public RangeTree(String name, ArrayList<ArrayList> categoryList, ArrayList<ArrayList> alist){
         this.name = name;
         this.alist = deleteArrays(alist);
         this.categoryList = categoryList;
+        this.type = checkType();
     }
 
     public RangeTree(String name, ArrayList<String> rlist){
         this.name = name;
         this.rlist = deleteStringArrays(rlist);
+        this.type = checkType();
     }
 
     public String toString(){
-        return this.name+" "+this.categoryList+" "+this.alist;
+        return this.name+" "+this.categoryList+" "+this.alist + " "+this.type;
+    }
+
+    public String toStringSimple(){
+        return this.name+" "+this.rlist+" "+this.type;
     }
 
     public ArrayList<ArrayList> deleteArrays(ArrayList<ArrayList> al){
@@ -44,5 +52,35 @@ public class RangeTree {
     }
     public ArrayList<ArrayList> getCategoryList(){
         return categoryList;
+    }
+    public int getCategoryAmount(){
+        return categoryAmount;
+    }
+    public void addCategoryAmount(){
+        categoryAmount++;
+    }
+    public int getType(){
+        return type;
+    }
+    public int checkType(){
+        if(categoryList.isEmpty()){
+            return 1;
+        }
+        else if(checkLists(categoryList)){
+            return 2;
+        }
+        else{
+            return 3;
+        }
+    }
+    public boolean checkLists(ArrayList<ArrayList> al){
+        for(int i=0;i<al.size();i++){
+            if(al.get(i).size() != 1){
+                return false;
+            }else{
+                continue;
+            }
+        }
+        return true;
     }
 }
